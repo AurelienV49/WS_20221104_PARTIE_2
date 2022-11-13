@@ -23,6 +23,12 @@ const assets = [
     que mettre certains fichiers en cache.  
 */
 self.addEventListener("install", installEvent => {
+    // .skipWaiting : dit au worker de s'installer avec sa nouvelle version immédiatement
+    // si elle existe (exemple: passage d'une v2 à v3)
+    // pas d'attente d'install = on n'attend pas que le client réouvre la page pour utiliser la 
+    // nouvelle version du worker
+    self.skipWaiting();
+
     installEvent.waitUntil(
         caches.open(staticDevCoffee).then(cache => {
             cache.addAll(assets)
