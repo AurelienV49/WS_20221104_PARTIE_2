@@ -16,6 +16,12 @@ const assets = [
     "/images/favicon/bluetooth.ico",
 ]
 
+/*  “install” : levé lorsque le navigateur installe le Service Worker 
+    L’événement d’installation se déclenche uniquement s’il y a eu un changement sur le fichier du service worker ou 
+    alors à chaque nouveau lancement de l’application.
+    Cet événement va s’occuper de toutes les actions qui sont nécessaires de faire au chargement de l’application, tel 
+    que mettre certains fichiers en cache.  
+*/
 self.addEventListener("install", installEvent => {
     installEvent.waitUntil(
         caches.open(staticDevCoffee).then(cache => {
@@ -51,6 +57,11 @@ self.addEventListener('activate', (event) => {
     );
 });
 
+
+/*  “fetch”: à chaque requête effectuée par le navigateur 
+    Un évènement fetch est également possible, il est déclenché lorsqu’une requête HTTP est émise par l’application.
+    permet d'intercepter des requêtes et d'y répondre de façon personnalisée. 
+*/
 self.addEventListener("fetch", fetchEvent => {
     fetchEvent.respondWith(
         caches.match(fetchEvent.request).then(res => {
